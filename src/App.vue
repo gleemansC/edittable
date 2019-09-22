@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <edit-table :p-model="model"></edit-table>
+    <edit-table ref="table" :p-model="model"></edit-table>
+    <ElButton type="" @click="submit">校验</ElButton>
   </div>
 </template>
 
@@ -15,6 +16,9 @@ export default {
     };
   },
   methods: {
+    submit() {
+      this.$refs.table.validate();
+    }
   },
   components: {}
 };

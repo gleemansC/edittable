@@ -1,13 +1,19 @@
 
 <template>
-  <div  style="margin:auto">
+  <div>
     <div>
-      <ElButton type @click="add">新增</ElButton>
-      <ElButton type @click="reduce">删除</ElButton>
+      <ElButton @click="add">新增</ElButton>
+      <ElButton @click="reduce">删除</ElButton>
     </div>
     <el-form :model="model" ref="editTable" :rules="model.rules">
-      <el-table :data="model.tableData">
-        <el-table-column label="切换" width="180px">
+      <el-table
+        :data="model.tableData"
+        highlight-current-row
+        @current-change="handleCurrentChange"
+        class="table"
+      >
+        <el-table-column type="index" width="50"></el-table-column>
+        <el-table-column label="状态" width="150px">
           <template slot-scope="scope">
             <el-form-item :prop="'tableData[' + scope.$index + '].whether'" :rules="rules.whether">
               <ElSelect
@@ -20,7 +26,7 @@
             </el-form-item>
           </template>
         </el-table-column>
-        <el-table-column label="内容" width="180px">
+        <el-table-column label="内容">
           <template slot-scope="scope">
             <el-form-item
               :prop="'tableData[' + scope.$index + '].name'"
@@ -43,9 +49,10 @@ export default {
       },
       rules: {
         whether: [{ required: true, message: "请输入", trigger: "blur" }],
-        rule: [{ required: true, message: "请输入", trigger: "change" }],
+        rule: [{ required: true, message: "请输入", trigger: "blur" }],
         disRule: [{}]
-      }
+      },
+      currentRow: 0
     };
   },
   props: {
@@ -72,7 +79,22 @@ export default {
         ruleName: this.rules.rule
       });
     },
-    reduce() {}
+    reduce() {
+      // this.model.tableData.splice(this.currentRow, 1);
+    },
+    handleCurrentChange(currentRow) {
+      this.currentRow = currentRow;
+    },
+    validate() {
+      this.$refs.editTable.validate(valid => {
+        if (valid) {
+          alert("submit!");
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    }
   },
   created() {
     if (this.pModel.tableData) {
@@ -84,3 +106,9 @@ export default {
   }
 };
 </script>
+<style>
+.table {
+  width: 700px;
+  margin: 0 auto;
+}
+</style>

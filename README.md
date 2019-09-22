@@ -1,5 +1,5 @@
 # edittable
-
+可编辑表格加校验
 ## Project setup
 ```
 npm install
