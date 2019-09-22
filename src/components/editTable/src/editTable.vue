@@ -10,6 +10,7 @@
         :data="model.tableData"
         highlight-current-row
         @current-change="handleCurrentChange"
+        :row-class-name="rowClassName"
         class="table"
       >
         <el-table-column type="index" width="50"></el-table-column>
