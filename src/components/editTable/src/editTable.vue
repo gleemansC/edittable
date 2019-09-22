@@ -9,11 +9,15 @@
       <el-table
         :data="model.tableData"
         highlight-current-row
-        @current-change="handleCurrentChange"
         :row-class-name="rowClassName"
+        @current-change="handleCurrentChange"
         class="table"
       >
-        <el-table-column type="index" width="50"></el-table-column>
+        <el-table-column label="序号" width="50px">
+          <template slot-scope="scope">
+            <el-radio v-model="currentRow" :label="scope.$index">&nbsp;</el-radio>
+          </template>
+        </el-table-column>
         <el-table-column label="状态" width="150px">
           <template slot-scope="scope">
             <el-form-item :prop="'tableData[' + scope.$index + '].whether'" :rules="rules.whether">
@@ -81,10 +85,10 @@ export default {
       });
     },
     reduce() {
-      // this.model.tableData.splice(this.currentRow, 1);
+      this.model.tableData.splice(this.currentRow, 1);
     },
-    handleCurrentChange(currentRow) {
-      this.currentRow = currentRow;
+    handleCurrentChange(row) {
+      this.currentRow = row.index;
     },
     validate() {
       this.$refs.editTable.validate(valid => {
@@ -95,6 +99,9 @@ export default {
           return false;
         }
       });
+    },
+    rowClassName({ row, rowIndex }) {
+      row.index = rowIndex;
     }
   },
   created() {

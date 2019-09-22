@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <edit-table ref="table" :p-model="model"></edit-table>
-    <ElButton type="" @click="submit">校验</ElButton>
+    <ElButton class="button" type="" @click="submit">校验</ElButton>
   </div>
 </template>
 
@@ -32,5 +32,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.button{
+  padding: 1000px
 }
 </style>
